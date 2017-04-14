@@ -1,6 +1,7 @@
+// Leaflet map setup
 var map = L.map('map', {
-  center: [41.133004, -77.593477],
-  zoom: 7
+  center: [39.923004, -75.183477],
+  zoom: 13
 });
 
 var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
@@ -11,33 +12,48 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolab
   ext: 'png'
 }).addTo(map);
 
-var cartoUserName = 'caseyxbones';
 
-var myLayer;
-
-var layers;
-
-var stations = function(){
-  layers= cartodb.createLayer(map, {
-  user_name: cartoUserName,
+var stations = cartodb.createLayer(map, {
+  user_name: 'caseyxbones',
   type: 'cartodb',
-  interactivity: true,
-  sublayers: [
-    {
-      sql: "SELECT cartodb_id, septa_id, dvrpc_id, objectid, field_1, state, county, globalid, operator, station, line, type, ST_SetSRID(ST_MakePoint(x,y),4326) AS the_geom_webmercator FROM (SELECT * FROM regionalrailstations) AS _camshaft_georeference_long_lat_analysis",
-      cartocss: '#layer { marker-width: 10; marker-fill: #000000; marker-fill-opacity: 0.9; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }',
-      interactivity: ['_count'], // Define properties you want to be available on interaction
-   }
-  ]
-});
+  sublayers:
+    [{
+    sql: "SELECT * FROM regionalrailstations_1",
+    cartocss: "#layer { marker-width: 10; marker-fill: #000000; marker-fill-opacity: 0.9; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }"
+    }]
+})
+.addTo(map);
 
-console.log("I did it!");
-  // .on('done', function(layer) {
-  //   // Set interactivity
-  //   layer.setInteraction(true);
-  //   // Set up map interaction event
-  //   layer.on('featureClick',function(e, latlng, pos, data) {
-  //     console.log(data);
-  //   });
-// });
-};
+
+var Exton16 = cartodb.createLayer(map, {
+  user_name: 'caseyxbones',
+  type: 'cartodb',
+  sublayers:
+      [{
+      sql: "SELECT * FROM exton_2016_blocks",
+      cartocss: "#layer { polygon-fill: ramp([count_], (#ffffb2, #fecc5c, #fd8d3c, #f03b20, #bd0026), quantiles); line-width: 1; line-color: #FFF; line-opacity: 0.5; }"
+      }]
+})
+.addTo(map);
+
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("myDropdown");
+    a = div.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+        } else {
+            a[i].style.display = "none";
+        }
+    }
+}

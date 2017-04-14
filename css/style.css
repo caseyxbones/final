@@ -4,8 +4,23 @@ body {
     font-family: colfax, helvetica, arial, sans-serif;
 }
 
+p.heading {
+  font-size: 28px;
+  font-family: sans-serif;
+  margin-top: 6px;
+  margin-bottom: 0px;
+}
+
 p.main {
-  font-size: 24px;
+  font-size: 13px;
+  margin-top: 0px;
+  font-style: italic;
+}
+
+p.body {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-size: 12px;
 }
 
 .map {
@@ -73,3 +88,54 @@ https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/*/
     margin-left: 0;
     border: 0px;
     }
+
+.dropbtn {
+    background-color: #999999;
+    color: white;
+    font-style: normal;
+    padding: 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #777777;
+}
+#myInput {
+    border-box: box-sizing;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd}
+
+.show {display:block;}
