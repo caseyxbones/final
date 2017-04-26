@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="css/style2.css" />
+  </head>
+  <body>
+<!-- Sidebar -->
+    <div class="sidebar">
+      <div id="intro">
+        <p class="heading"> SEPTA Regional Rail Passenger Origins<p>
+        <p class="main">by Casey C. Ross for the DVRPC</p>
+        <p class="body">
+                This web map is an example of the ways in which passenger origin data can be interactively
+                visualized by agencies like the DVRPC and SEPTA. Using license plate survey data that is scrubbed
+                of identifying information by PennDOT and then aggregated into block groups by origin,
+                agencies can map the origins of passengers who drive to Regional Rail stations.
+        </p>
+        <p class="body">
+                This analysis can help us understand who chooses to drive to stations, and can help inform policy around
+                multimodal and non-motorized infrastructure improvements around stations as well as parking availability and pricing.
+        </p>
+        <p class="body">
+                This web application was created by Casey C. Ross at the University of Pennsylvania using data provided by the
+                DVRPC. Driver origin data presented on this site is property of the DVRPC and is used in this context with the
+                express permission of the DVRPC. This website is merely intended to provide an example of how the DVRPC could use its driver-origin
+                data in the future, and to create a preliminary framework upon which the agency can build if it so chooses.
+        </p>
+      </div>
+    </div>
+
+<!-- Right Panel -->
+    <div class="right">
+        <div class="dropdown">
+          <button onclick="showDropdown()" class="dropbtn">Select a Station</button>
+          <div id="myDropdown" class="dropdown-content">
+            <a id="Home">((Re-Center))</a>
+            <a id="Exton">Exton</a>
+            <a id="Thorndale">Thorndale</a>
+          </div>
+        </div>
+
+        <div class="results" id="results">
+          <p class="heading" id="station_name">Station Name</p>
+          <p class="body" id="station_details">
+              <a id="line_name">Name of Regional Rail Line</a><br>
+              <a id="station_location">County, State</a><br><br>
+              <a id="data_selection">Select data year(s) to map:</a><br>
+              <form action="">
+                  <input id="rb1" type="radio" name="Year" onclick="rb1Selected()"><a class="year" id="year1">Year</a><br>
+                  <input id="rb2" type="radio" name="Year" onclick="rb2Selected()"><a class="year" id="year2">Year</a><br>
+              </form>
+              <!-- <input class="check" id="checkBox_1" type="checkbox">
+              <a class="year" id="year1">Year Text</a><br> -->
+              <!-- <input class="check" id="checkBox_2" type="checkbox">
+              <a class="year" id="year2">Year Text</a><br> -->
+              <button class="dropbtn" id="mapSelected"> Map Selected </button>
+
+
+
+
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Map -->
+    <div id="map" class="map">
+
+    <!-- Javascript Imports -->
+    <script src="js/jquery-2.2.0.js"></script>
+    <script src="js/underscore.js"></script>
+    <!-- <script src="js/leaflet.js"></script> -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
+
+<!-- <style="display: none;"> -->
