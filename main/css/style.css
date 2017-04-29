@@ -139,3 +139,9 @@ https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/*/
 .dropdown a:hover {background-color: #ddd}
 
 .show {display:block;}
+
+.buffer {
+  stroke: black;
+  fill: none;
+  width: 5px;
+}

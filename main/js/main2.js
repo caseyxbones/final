@@ -1,45 +1,48 @@
-$("#results").hide();
+function dataPull() {
+  var dataDummy = cartodb.createLayer(map, {
+    user_name: 'caseyxbones',
+    type: 'cartodb',
+    sublayers:
+        [
+        {
+        sql: "",
+        cartocss: ""
+        },
+        {
+        sql: "",
+        cartocss: ""
+        }]
+      }, {}, function(layer) {
+        stationData = layer;
+      }).addTo(map);
+      dataPull.called = true;
+      console.log("dataPull status" + " " + "=" + dataPull.called);
+      return dataDummy;
+}
 
-var map = L.map('map', {
-  center: [39.952372, -75.163584],
-  zoom: 12
-});
+function circleQuarter() {
+    var quarterMile = L.circle([globalYX[0],globalYX[1]], 402.336, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
+  }
+function circleHalf() {
+    var halfMile = L.circle([globalYX[0],globalYX[1]], 804.672, {color:"black", weight: 1, opacity:75, fillOpacity: 0.10}).addTo(map);
+  }
+function circleOne() {
+    var oneMile = L.circle([globalYX[0],globalYX[1]], 1609.34, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
+  }
+function circleFive() {
+    var fiveMile = L.circle([globalYX[0],globalYX[1]], 8046.72, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
+  }
 
-var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
-  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  subdomains: 'abcd',
-  minZoom: 0,
-  maxZoom: 20,
-  ext: 'png'
-}).addTo(map);
 
-
-var cartoUserName = 'caseyxbones';
-var myLayer;
-
-var exton11 = cartodb.createLayer(map, {
-  user_name: cartoUserName,
-  type: 'cartodb',
-  interactivity: true,
-  sublayers: [
-    {
-      sql: "SELECT * FROM exton_2011_blocks",
-      cartocss: "#layer { polygon-fill: ramp([count_], (#ffffb2, #fecc5c, #fd8d3c, #f03b20, #bd0026), quantiles); line-width: 1; line-color: #FFF; line-opacity: 0.5; }",
-      interactivity: ['count_'], // Define properties you want to be available on interaction
-   }
-  ]
-}).addTo(map)
-  .on('done', function(layer) {
-    // Set interactivity
-    layer.setInteraction(true);
-    // Set up map interaction event
-    layer.on('featureClick',function(e, latlng, pos, data) {
-      console.log(data);
-    });
-    // Add button click events, demo setCartoCSS and setSQL
-    });
-    $('#Exton').click(function() {
-      layer.getSubLayer(0).setSQL('SELECT * FROM exton_2011_blocks');
-    }).on('error', function() {
-    console.log("some error occurred");
-});
+function bufferQuarter() {
+    var bufferDummy = L.circle([globalYX[0],globalYX[1]], 402.336,
+      {
+        color:"black",
+        weight: 1,
+        opacity:75,
+        fillOpacity: 0.15
+      }, function (layer) {
+        bufferDataQuarter = layer;
+      }).addTo(map);
+      return bufferDummy;
+}

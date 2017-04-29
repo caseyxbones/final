@@ -1,6 +1,5 @@
 $("#results").hide();
 
-
 // Leaflet map setup
 var map = L.map('map', {
   center: [39.952372, -75.163584],
@@ -18,7 +17,6 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolab
 var username = "caseyxbones";
 var globalData;
 var globalYX = [];
-
 
 // Radio Button Functions
 // This  helps the "Map Selected()" function code know which data to map on a button click event later
@@ -62,7 +60,6 @@ function dataPull() {
       return dataDummy;
 }
 
-
 // calls the dataPull and coordinatePull functions independently so that data is pulled down once page is loaded
 dataPull();
 
@@ -87,8 +84,7 @@ function thorndaleCoordinates (){
     );
   }
 
-
-// Functions to get data from Cartop for a station and map it:
+// Functions to get data from Carto for a station and map it:
 function exton2011() {
     console.log("exton2011 called");
     layerSelected = stationData.getSubLayer(0);
@@ -119,22 +115,64 @@ function thorndale2016() {
     pointSelected.setCartoCSS("#layer { marker-width: 10; marker-fill: #000000; marker-fill-opacity: 0.9; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }");
 }
 
-// var bufferlayer;
-// var globalPoint;
-//
-// var pt = {
-//   type: 'Feature',
-//   geometry: {
-//   type: 'Point',
-//       coordinates: [globalYX[0], globalYX[1]]
-//       },
-//       properties: {}
-//   };
-//
+
+// Trying to create Buffers around ANYTHING
 // var unit = "miles";
-// var bufferLayer = turf.buffer(pt, 1, unit);
+// var marker = new L.Marker([39.952372, -75.163584]);
+// var markerGeoJSON = new marker.toGeoJSON().addTo(map);
 //
-// L.geoJson(bufferLayer).addTo(map);
+// var bufferedMarker = turf.buffer(markerGeoJSON, 2, unit);
+// var multi = L.multiPolygon([bufferedMarker.geometry.coordinates]);
+// var multiGeoJSON = multi.toGeoJSON();
+//
+// function mapMe() {
+//   var mappedBuffer = L.geoJson(multiGeoJSON, {
+//       style: function (feature) {
+//           return {color: feature.properties.color};
+//       },
+//       onEachFeature: function (feature, layer) {
+//           layer.bindPopup(feature.properties.description);
+//       }
+//   }).addTo(map);
+//   return mappedBuffer;
+// }
+
+// function circleQuarter() {
+//     var quarterMile = L.circle([globalYX[0],globalYX[1]], 402.336, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
+//   }
+// function circleHalf() {
+//     var halfMile = L.circle([globalYX[0],globalYX[1]], 804.672, {color:"black", weight: 1, opacity:75, fillOpacity: 0.10}).addTo(map);
+//   }
+// function circleOne() {
+//     var oneMile = L.circle([globalYX[0],globalYX[1]], 1609.34, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
+//   }
+// function circleFive() {
+//     var fiveMile = L.circle([globalYX[0],globalYX[1]], 8046.72, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
+//   }
+
+//   var buffer1 = (L.circle([globalYX[0],globalYX[1]], 402.336,
+//   {
+//     color:"black",
+//     weight: 1,
+//     opacity:75,
+//     fillOpacity: 0.15
+//   }));
+//
+// function mapBuffer1(){
+//     buffer1.addTo(map);
+// }
+
+// function bufferQuarter() {
+//     var buffer1 = new L.circle([globalYX[0],globalYX[1]], 402.336,
+//       {
+//         color:"black",
+//         weight: 1,
+//         opacity:75,
+//         fillOpacity: 0.15
+//       }).addTo(map);
+//       return buffer1;
+// }
+
 
 
 // Station selection Functions
