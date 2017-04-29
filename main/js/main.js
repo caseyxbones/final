@@ -15,9 +15,14 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolab
   ext: 'png'
 }).addTo(map);
 
+var username = "caseyxbones";
 var globalData;
+globalYX = [];
+var globalX = [];
+var globalY = [];
 
-// Radio Button Testing Functions
+// Radio Button Functions
+// This  helps the "Map Selected()" function code know which data to map on a button click event later
 function rb1Selected(){
   rb1.checked = true;
   console.log("Radio Button 1 has been selected,"+ " " + " rb1 button status =" + " " + rb1.checked);
@@ -56,12 +61,38 @@ function dataPull() {
       dataPull.called = true;
       console.log("dataPull status" + " " + "=" + dataPull.called);
       return dataDummy;
-
 }
 
-dataPull(); // calls the dataPull function independently so that data is pulled down once page is loaded
+
+// calls the dataPull and coordinatePull functions independently so that data is pulled down once page is loaded
+dataPull();
+
+// Functions to get station coordinates when station is selected:
+function extonCoordinates (){
+    var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Exton'",
+    function (data) {
+      $.each(data.rows, function(key, val) {
+        globalX.splice(0, 1, val.x); // splice will overwrite the existing array
+        globalY.splice(0, 1, val.y); // splice will overwrite the existing array
+        globalYX.splice(0, 2, val.y, val.x);
+      });
+    }
+    );
+}
+
+function thorndaleCoordinates (){
+    var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Thorndale'",
+    function (data) {
+      $.each(data.rows, function(key, val) {
+        globalX.splice(0, 1, val.x); // splice will overwrite the existing array
+        globalY.splice(0, 1, val.y); // splice will overwrite the existing array
+      });
+    }
+    );
+  }
 
 
+// Functions to get data from Cartop for a station and map it:
 function exton2011() {
     console.log("exton2011 called");
     layerSelected = stationData.getSubLayer(0);
@@ -91,6 +122,24 @@ function thorndale2016() {
     pointSelected.setSQL("SELECT * FROM regionalrailstations_1 WHERE station LIKE '%Thorndale%'");
     pointSelected.setCartoCSS("#layer { marker-width: 10; marker-fill: #000000; marker-fill-opacity: 0.9; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }");
 }
+
+// var bufferlayer;
+// var globalPoint;
+//
+// var pt = {
+//   type: 'Feature',
+//   geometry: {
+//   type: 'Point',
+//       coordinates: [globalYX[0], globalYX[1]]
+//       },
+//       properties: {}
+//   };
+//
+// var unit = "miles";
+// var bufferLayer = turf.buffer(pt, 1, unit);
+//
+// L.geoJson(bufferLayer).addTo(map);
+
 
 // Station selection Functions
 function MapSelected() {
@@ -162,6 +211,7 @@ $("#Exton").click(function(){
   console.log("Exton clearMap() has been called");
   map.panTo(new L.LatLng(40.01943118, -75.62175724));
   extonResults();
+  extonCoordinates();
 });
 
 $("#Thorndale").click(function(){
@@ -170,6 +220,7 @@ $("#Thorndale").click(function(){
   console.log("stationData.hide() executed");
   map.panTo(new L.LatLng(39.99277222, -75.76289642));
   thorndaleResults();
+  thorndaleCoordinates();
 });
 
 $("#mapSelected").click(function(){
