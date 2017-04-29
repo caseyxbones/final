@@ -17,9 +17,8 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolab
 
 var username = "caseyxbones";
 var globalData;
-globalYX = [];
-var globalX = [];
-var globalY = [];
+var globalYX = [];
+
 
 // Radio Button Functions
 // This  helps the "Map Selected()" function code know which data to map on a button click event later
@@ -72,8 +71,6 @@ function extonCoordinates (){
     var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Exton'",
     function (data) {
       $.each(data.rows, function(key, val) {
-        globalX.splice(0, 1, val.x); // splice will overwrite the existing array
-        globalY.splice(0, 1, val.y); // splice will overwrite the existing array
         globalYX.splice(0, 2, val.y, val.x);
       });
     }
@@ -84,8 +81,7 @@ function thorndaleCoordinates (){
     var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Thorndale'",
     function (data) {
       $.each(data.rows, function(key, val) {
-        globalX.splice(0, 1, val.x); // splice will overwrite the existing array
-        globalY.splice(0, 1, val.y); // splice will overwrite the existing array
+        globalYX.splice(0, 2, val.y, val.x);
       });
     }
     );
