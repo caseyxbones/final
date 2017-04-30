@@ -20,29 +20,15 @@ function dataPull() {
       return dataDummy;
 }
 
-function circleQuarter() {
-    var quarterMile = L.circle([globalYX[0],globalYX[1]], 402.336, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
-  }
-function circleHalf() {
-    var halfMile = L.circle([globalYX[0],globalYX[1]], 804.672, {color:"black", weight: 1, opacity:75, fillOpacity: 0.10}).addTo(map);
-  }
-function circleOne() {
-    var oneMile = L.circle([globalYX[0],globalYX[1]], 1609.34, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
-  }
-function circleFive() {
-    var fiveMile = L.circle([globalYX[0],globalYX[1]], 8046.72, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
-  }
-
-
-function bufferQuarter() {
-    var bufferDummy = L.circle([globalYX[0],globalYX[1]], 402.336,
-      {
-        color:"black",
-        weight: 1,
-        opacity:75,
-        fillOpacity: 0.15
-      }, function (layer) {
-        bufferDataQuarter = layer;
-      }).addTo(map);
-      return bufferDummy;
-}
+var buffer = function bufferOne() {
+  var pt = {
+    "type": "Feature",
+    "properties": {},
+    "geometry": {
+      "type": "Point",
+      "coordinates": [globalYX[1], globalYX[0]]
+    }
+  };
+  var buffered = turf.buffer(pt, 1, unit);
+  var buffer = new L.geoJson(buffered, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
+};

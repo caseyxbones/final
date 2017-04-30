@@ -115,64 +115,145 @@ function thorndale2016() {
     pointSelected.setCartoCSS("#layer { marker-width: 10; marker-fill: #000000; marker-fill-opacity: 0.9; marker-allow-overlap: true; marker-line-width: 1; marker-line-color: #FFF; marker-line-opacity: 1; }");
 }
 
+///////////////////////////////////////////////
+///                BUFFER STUFF            ///
+///////////////////////////////////////////////
+var unit = 'miles';
+function getGlobalYX() {
+      var ptDummy = {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Point",
+          "coordinates": [globalYX[1], globalYX[0]]
+        }
+      }; return ptDummy;
+}
 
-// Trying to create Buffers around ANYTHING
-// var unit = "miles";
-// var marker = new L.Marker([39.952372, -75.163584]);
-// var markerGeoJSON = new marker.toGeoJSON().addTo(map);
-//
-// var bufferedMarker = turf.buffer(markerGeoJSON, 2, unit);
-// var multi = L.multiPolygon([bufferedMarker.geometry.coordinates]);
-// var multiGeoJSON = multi.toGeoJSON();
-//
-// function mapMe() {
-//   var mappedBuffer = L.geoJson(multiGeoJSON, {
-//       style: function (feature) {
-//           return {color: feature.properties.color};
-//       },
-//       onEachFeature: function (feature, layer) {
-//           layer.bindPopup(feature.properties.description);
-//       }
-//   }).addTo(map);
-//   return mappedBuffer;
-// }
+// QUARTER MILE BUFFER
+    function createBuffer_qu() {
+          var pt = getGlobalYX();
+          bufferDummy_qu = turf.buffer(pt, 0.25, unit);
+          return bufferDummy_qu;
+        }
+    function addtoMap_qu() {
+          var buffered_qu = createBuffer_qu();
+          addtoDummy_qu = new L.geoJson(buffered_qu, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
+          return addtoDummy_qu;
+    }
+    function bufferQuarterMile() {
+      getGlobalYX();
+      createBuffer_qu();
+      addtoMap_qu();
+      bufferQuarterMile.called = true;
+    }
 
-// function circleQuarter() {
-//     var quarterMile = L.circle([globalYX[0],globalYX[1]], 402.336, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
-//   }
-// function circleHalf() {
-//     var halfMile = L.circle([globalYX[0],globalYX[1]], 804.672, {color:"black", weight: 1, opacity:75, fillOpacity: 0.10}).addTo(map);
-//   }
-// function circleOne() {
-//     var oneMile = L.circle([globalYX[0],globalYX[1]], 1609.34, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
-//   }
-// function circleFive() {
-//     var fiveMile = L.circle([globalYX[0],globalYX[1]], 8046.72, {color:"black", weight: 1, opacity:75, fillOpacity: 0.05}).addTo(map);
-//   }
+// HALF MILE BUFFER
+    function createBuffer_ha() {
+          var pt = getGlobalYX();
+          bufferDummy_ha = turf.buffer(pt, 0.5, unit);
+          return bufferDummy_ha;
+        }
+    function addtoMap_ha() {
+          var buffered_ha = createBuffer_ha();
+          addtoDummy_ha = new L.geoJson(buffered_ha, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
+          return addtoDummy_ha;
+    }
+    function bufferHalfMile() {
+      getGlobalYX();
+      createBuffer_ha();
+      addtoMap_ha();
+      bufferHalfMile.called = true;
+    }
 
-//   var buffer1 = (L.circle([globalYX[0],globalYX[1]], 402.336,
-//   {
-//     color:"black",
-//     weight: 1,
-//     opacity:75,
-//     fillOpacity: 0.15
-//   }));
-//
-// function mapBuffer1(){
-//     buffer1.addTo(map);
-// }
+// ONE MILE BUFFER
+    function createBuffer_on() {
+          var pt = getGlobalYX();
+          bufferDummy_on = turf.buffer(pt, 1, unit);
+          return bufferDummy_on;
+        }
+    function addtoMap_on() {
+          var buffered_on = createBuffer_on();
+          addtoDummy_on = new L.geoJson(buffered_on, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
+          return addtoDummy_on;
+    }
+    function bufferOneMile() {
+      getGlobalYX();
+      createBuffer_on();
+      addtoMap_on();
+      bufferOneMile.called = true;
+    }
 
-// function bufferQuarter() {
-//     var buffer1 = new L.circle([globalYX[0],globalYX[1]], 402.336,
-//       {
-//         color:"black",
-//         weight: 1,
-//         opacity:75,
-//         fillOpacity: 0.15
-//       }).addTo(map);
-//       return buffer1;
-// }
+// FIVE MILE BUFFER
+    function createBuffer_fi() {
+          var pt = getGlobalYX();
+          bufferDummy_fi = turf.buffer(pt, 5, unit);
+          return bufferDummy_fi;
+        }
+    function addtoMap_fi() {
+          var buffered_fi = createBuffer_fi();
+          addtoDummy_fi = new L.geoJson(buffered_fi, {color:"black", weight: 1, opacity:75, fillOpacity: 0.15}).addTo(map);
+          return addtoDummy_fi;
+    }
+    function bufferFiveMile() {
+      getGlobalYX();
+      createBuffer_fi();
+      addtoMap_fi();
+      bufferFiveMile.called = true;
+    }
 
+// ADD ALL BUFFERS
+    function allBuffers() {
+      bufferQuarterMile();
+      bufferHalfMile();
+      bufferOneMile();
+      bufferFiveMile();
+      allBuffers.called = true;
+    }
+
+// CLEARING BUFFERS IF THEY HAVE BEEN MAPPED
+    function clearQuarterMile() {
+        if ((bufferQuarterMile.called === true)) {
+          map.removeLayer(addtoDummy_qu);
+        }
+        else {}
+    }
+    function clearHalfMile() {
+        if ((bufferHalfMile.called === true)) {
+          map.removeLayer(addtoDummy_ha);
+        }
+        else {}
+    }
+    function clearOneMile() {
+        if ((bufferOneMile.called === true)) {
+          map.removeLayer(addtoDummy_on);
+        }
+        else {}
+    }
+    function clearFiveMile() {
+        if ((bufferFiveMile.called === true)) {
+          map.removeLayer(addtoDummy_fi);
+        }
+        else {}
+    }
+    function clearallBuffers() {
+      if ((allBuffers.called === true)) {
+        map.removeLayer(addtoDummy_qu);
+        map.removeLayer(addtoDummy_ha);
+        map.removeLayer(addtoDummy_on);
+        map.removeLayer(addtoDummy_fi);
+      }
+      else {}
+    }
+
+// THIS IS THE ACTUAL FUNCTION THAT WILL BE USED
+    function clearBuffers() {
+      clearQuarterMile();
+      clearHalfMile();
+      clearOneMile();
+      clearFiveMile();
+      clearallBuffers();
+    }
 
 
 // Station selection Functions
@@ -238,6 +319,7 @@ $("#Home").click(function(){
   map.panTo(new L.LatLng(39.952372, -75.163584),8);
   $("#myDropdown").hide();
   $("#results").hide();
+  clearBuffers();
 });
 
 $("#Exton").click(function(){
@@ -246,6 +328,7 @@ $("#Exton").click(function(){
   map.panTo(new L.LatLng(40.01943118, -75.62175724));
   extonResults();
   extonCoordinates();
+  clearBuffers();
 });
 
 $("#Thorndale").click(function(){
@@ -255,6 +338,7 @@ $("#Thorndale").click(function(){
   map.panTo(new L.LatLng(39.99277222, -75.76289642));
   thorndaleResults();
   thorndaleCoordinates();
+  clearBuffers();
 });
 
 $("#mapSelected").click(function(){
