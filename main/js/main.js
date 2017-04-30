@@ -1,3 +1,13 @@
+// STILL TO DO:
+      // Add buttons for buffers and to clear buffers
+      // Figure out how to binds count popups to specific blocks (see bottom of this code for notes)
+      // Create legend that updates when stations and years are mapped
+
+// STRETCH GOALS:
+      // Figure out how to calculate the count for all blocks within a given buffer (turf.js probably)
+
+
+
 $("#results").hide();
 
 // Leaflet map setup
@@ -14,6 +24,7 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolab
   ext: 'png'
 }).addTo(map);
 
+// Global Variables
 var username = "caseyxbones";
 var globalData;
 var globalYX = [];
@@ -34,7 +45,7 @@ function rb2Selected(){
   console.log("Radio Button 2 has been selected," + " " + "rb2 button status =" + " " + rb2.checked);
 }
 
-// The dataPull function essentially creates a blank cartoDB later, which I can then change using station-s[ecific functions.
+// The dataPull function essentially creates a blank cartoDB layer, which I can then change using station-specific functions.
 // This solves several problems: it means any station can be mapped first, whereas before Exton 2011 had to be mapped first or
 // else stationData didn't exist; it makes it so that the SQL is truly refreshing and layers cannot appear on top of each other;
 // it is easier for me, personally, to work with and understand.
@@ -60,10 +71,13 @@ function dataPull() {
       return dataDummy;
 }
 
-// calls the dataPull and coordinatePull functions independently so that data is pulled down once page is loaded
+// calls the dataPull and coordinatePull functions independently so that "data" is pulled down once page is loaded
+// makes sure stationData exists right after page load even though nothing is mapped
 dataPull();
 
-// Functions to get station coordinates when station is selected:
+// Functions to get specific station coordinates when station is selected:
+// If more stations are added later, the code below can be copied, pasted, and easily modified
+// This meas the mapping functions can be easily expanded and scaled in the future
 function extonCoordinates (){
     var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Exton'",
     function (data) {
@@ -84,7 +98,9 @@ function thorndaleCoordinates (){
     );
   }
 
-// Functions to get data from Carto for a station and map it:
+// Functions to get data from Carto for a station and map it
+// If more stations are added later, the code below can be copied, pasted, and easily modified
+// This meas the mapping functions can be easily expanded and scaled in the future
 function exton2011() {
     console.log("exton2011 called");
     layerSelected = stationData.getSubLayer(0);
@@ -118,6 +134,11 @@ function thorndale2016() {
 ///////////////////////////////////////////////
 ///                BUFFER STUFF            ///
 ///////////////////////////////////////////////
+
+// The cool thing about these functions is that they use globalXY for the coordinates
+// That means that even if 200 more stations are added to this application, this code will always work and not need to be modified
+// I am particularly proud of this, and it means application scaling is realistic
+
 var unit = 'miles';
 function getGlobalYX() {
       var ptDummy = {
@@ -246,7 +267,7 @@ function getGlobalYX() {
       else {}
     }
 
-// THIS IS THE ACTUAL FUNCTION THAT WILL BE USED
+// THIS IS THE ACTUAL FUNCTION THAT WILL BE USED TO CLEAR THE MAP OF ALL BUFFERS
     function clearBuffers() {
       clearQuarterMile();
       clearHalfMile();
@@ -255,8 +276,9 @@ function getGlobalYX() {
       clearallBuffers();
     }
 
-
 // Station selection Functions
+// Again, this is scalable: if there were 200 stations added this would become long, but would be relatively easily
+// accomplished with some copy/paste and a few modifications.
 function MapSelected() {
   if (($("#station_name").text() === "Exton Station") && (rb1.checked === true)) {
     console.log("Someone wants to map Exton 2011!");
@@ -287,6 +309,10 @@ function showDropdown() {
 }
 
 // Results Functions
+// This might be more easily accomplished with SQL calls if there are lots of stations going forward
+// Then again, the code will be long either way if there are lots of stations in the future, so maybe
+// Copy paste will work just as well. Especially since this information is generally static and
+// Shouldn't need to be updated.
 function extonResults(){
   $("#myDropdown").hide();
   $("#station_name").text("Exton Station");
@@ -348,3 +374,39 @@ $("#mapSelected").click(function(){
   stationData.show();
   console.log("stationData.show() executed");
 });
+
+
+
+///////////////////////////////////////////////
+///                FOR MONDAY 5/1           ///
+///////////////////////////////////////////////
+
+// Work with this to get pop-up info-windows for your GeoJSON layers
+// You will have to create an SQL statement to get the value of the "Count" column for each feature
+// You will have to figure out where that value is stored and then fill in the "popupContent" field with that array address
+// This is similar to what you did to get ther GlobalYX for the buffers
+// Build off of that code to do this code
+
+// function onEachFeature(feature, layer) {
+//     // does this feature have a property named popupContent?
+//     if (feature.properties && feature.properties.popupContent) {
+//         layer.bindPopup(feature.properties.popupContent);
+//     }
+// }
+//
+// var geojsonFeature = {
+//     "type": "Feature",
+//     "properties": {
+//         "name": "Coors Field",
+//         "amenity": "Baseball Stadium",
+//         "popupContent": "This is where the Rockies play!"
+//     },
+//     "geometry": {
+//         "type": "Point",
+//         "coordinates": [-104.99404, 39.75621]
+//     }
+// };
+//
+// L.geoJSON(geojsonFeature, {
+//     onEachFeature: onEachFeature
+// }).addTo(map);
