@@ -5,24 +5,25 @@ body {
 }
 
 p.heading {
-  font-size: 28px;
+  font-size: 2em;
   font-family: sans-serif;
   margin-top: 6px;
-  margin-bottom: 0px;
+  margin-bottom: 2px;
   color: #4E4E4E;
 }
 
 p.main {
-  font-size: 13px;
+  font-size: 1.25em;
   margin-top: 0px;
+  margin-bottom: 10px;
   font-style: italic;
   color: #4E4E4E;
 }
 
 p.body {
-  margin-top: 20px;
+  margin-top: 0px;
   margin-bottom: 20px;
-  font-size: 10px;
+  font-size: 1em;
   color: #4E4E4E;
 }
 
@@ -55,7 +56,6 @@ p.body {
   bottom: 0px;
   z-index: -1;
 }
-
 
 .dropbtn {
     background-color: #4c7d9a;
@@ -123,7 +123,7 @@ p.body {
 }
 
 #station_name {
-  font-size: 3em;
+  font-size: 2.25em;
   padding-top: 10px;
 }
 
@@ -133,7 +133,7 @@ p.body {
 }
 
 #data_selection {
-  margin-top: 75px;
+  margin-top: 1.25em;
   font-size: 0.75em;
   font-style: italic;
 }
@@ -145,4 +145,85 @@ p.body {
 
 #mapSelected {
   margin-top: 15px;
+}
+
+
+/*The styling for this legend was adapted from code provided by Tile Mill at the following URL:
+https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/*/
+
+.my-legend {
+    background-color: ;
+    position:absolute;
+    float:inherit;
+    z-index: 10;
+    padding-left: 85%;
+    padding-top: 1%;
+}
+
+.my-legend .legend-title {
+  text-align: left;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 90%;
+}
+
+.my-legend .legend-scale ul {
+  margin: 0;
+  padding: 0;
+  float: left;
+  list-style: none;
+}
+
+.my-legend .legend-scale ul li {
+  display: block;
+  float: left;
+  width: 30px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 0.75em;
+  list-style: none;
+}
+
+.my-legend ul.legend-labels li span {
+  display: block;
+  float: left;
+  height: 8px;
+  width: 30px;
+}
+
+.my-legend a {
+  color: #777;
+}
+
+
+.buffers {
+    position: fixed;
+    float: inherit;
+    display: inline-block;
+    margin-left: 75%;
+    margin-top: 22.5%;
+    z-index: 10;
+}
+
+.bufferbtn {
+    background-color: #ffffff;
+    color: black;
+    font-style: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 0.75em;
+    border: 1px solid #777777;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.bufferbtn:hover, .bufferbtn:focus {
+    background-color: #eeeeee;
+}
+
+.bufferbtn:active {
+  background-color: #4c7d9a;
+  color: white;
 }

@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <!-- CSS Imports -->
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css"/>
     <link rel="stylesheet" href="css/style2.css" />
@@ -15,19 +17,17 @@
 <!-- Sidebar -->
     <div class="sidebar">
       <div id="intro">
-        <p class="heading"> SEPTA Regional Rail Passenger Origins<p>
+        <p class="heading"> SEPTA Regional Rail Passenger Origins</p>
         <p class="main">by Casey C. Ross for the DVRPC</p>
         <p class="body">
-                This web application was created by Casey C. Ross at the University of Pennsylvania using data provided by the
-                DVRPC. Driver origin data presented on this site is property of the DVRPC and is used in this context with the
-                express permission of the DVRPC. This website provides an example of one way in which the DVRPC could use driver-origin
-                data in the future, and to create a preliminary framework upon which the agency can build if it so chooses.
+                This application was created by Casey C. Ross at the University of Pennsylvania using data provided by the
+                DVRPC. Driver origin data presented on this site is property of the DVRPC.
         </p>
         <p class="body">
-                Using license plate survey data that is scrubbed of identifying information by PennDOT and then aggregated into
-                block groups by origin, city and regional agencies can map the origins of passengers who drive to Regional Rail stations.
-                This analysis can help us understand who chooses to drive to stations, and can help inform policy around
-                multimodal and non-motorized infrastructure improvements around stations as well as parking availability and pricing.
+                Using license plate survey data that is scrubbed of identifying information and  aggregated into
+                blocks, city and regional agencies can map the origins of those SEPTA passengers accessing regional rail by car.
+                This analysis can help agencies understand station access mode share, and can help inform policy around
+                infrastructure improvements near stations as well as parking availability and pricing.
         </p>
       </div>
     </div>
@@ -42,6 +42,13 @@
             <a id="Thorndale">Thorndale</a>
           </div>
         </div>
+
+        <!-- <div class="buffers">
+          <button onclick="" class="bufferbtn">0.25 Mile</button>
+          <button onclick="" class="bufferbtn">0.50 Mile</button>
+          <button onclick="" class="bufferbtn">1.00 Mile</button>
+          <button onclick="" class="bufferbtn">5.00 Mile</button>
+        </div> -->
 
         <div class="results" id="results">
           <p class="heading" id="station_name">Station Name</p>
@@ -64,11 +71,34 @@
 
     <!-- Map -->
     <div id="map" class="map">
+      <!--  This legend was adapted from code provided by Tile Mill at the following URL: -->
+      <!-- https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/ -->
+      <div id="legend" class='my-legend'>
+          <div class='legend-title'>Cars Originating in Block</div>
+          <div class='legend-scale'>
+            <ul class='legend-labels'>
+              <li><span style='background:#ffffb2;'></span>1</li>
+              <li><span style='background:#fecc5c;'></span></li>
+              <li><span style='background:#fd8d3c;'></span></li>
+              <li><span style='background:#f03b20;'></span></li>
+              <li><span style='background:#bd0026;'></span>10</li>
+            </ul>
+          </div>
+        </div>
+        <div id="bufferbtns" class="buffers">
+          <button onclick="" class="bufferbtn">Clear</button>
+          <button onclick="" class="bufferbtn">0.25 Mile</button>
+          <button onclick="" class="bufferbtn">0.50 Mile</button>
+          <button onclick="" class="bufferbtn">1.00 Mile</button>
+          <button onclick="" class="bufferbtn">5.00 Mile</button>
+        </div>
+    </div>
 
     <!-- Javascript Imports -->
-    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
-    <!-- <script src="js/leaflet.js"></script> -->
     <script src="js/jquery-2.2.0.js"></script>
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <!-- <script src="js/leaflet.js"></script> -->
     <script src="js/underscore.js"></script>
     <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
     <script src="js/main.js"></script>

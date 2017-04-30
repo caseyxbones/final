@@ -9,6 +9,8 @@
 
 
 $("#results").hide();
+$("#legend").hide();
+$("#bufferbtns").hide();
 
 // Leaflet map setup
 var map = L.map('map', {
@@ -53,6 +55,7 @@ function dataPull() {
   var dataDummy = cartodb.createLayer(map, {
     user_name: 'caseyxbones',
     type: 'cartodb',
+    legends:true,
     sublayers:
         [
         {
@@ -136,8 +139,9 @@ function thorndale2016() {
 ///////////////////////////////////////////////
 
 // The cool thing about these functions is that they use globalXY for the coordinates
-// That means that even if 200 more stations are added to this application, this code will always work and not need to be modified
-// I am particularly proud of this, and it means application scaling is realistic
+// That means that even if 200 more stations are added to this application, this code will
+// always work and not need to be modified. I am particularly proud of this, and it means
+// application scaling is realistic
 
 var unit = 'miles';
 function getGlobalYX() {
@@ -280,6 +284,9 @@ function getGlobalYX() {
 // Again, this is scalable: if there were 200 stations added this would become long, but would be relatively easily
 // accomplished with some copy/paste and a few modifications.
 function MapSelected() {
+  map.setZoom(11);
+  $("#legend").show();
+  $("#bufferbtns").show();
   if (($("#station_name").text() === "Exton Station") && (rb1.checked === true)) {
     console.log("Someone wants to map Exton 2011!");
     exton2011();
@@ -338,11 +345,12 @@ function thorndaleResults(){
   $("#results").show();
 }
 
+
 // Click Events
 $("#Home").click(function(){
   console.log("Re-center map has been clicked");
   stationData.hide();
-  map.panTo(new L.LatLng(39.952372, -75.163584),8);
+  map.panTo(new L.LatLng(39.952372, -75.163584),{animate: true, duration: 1});
   $("#myDropdown").hide();
   $("#results").hide();
   clearBuffers();
@@ -351,7 +359,7 @@ $("#Home").click(function(){
 $("#Exton").click(function(){
   console.log("Exton has been clicked in the dropdown menu");
   console.log("Exton clearMap() has been called");
-  map.panTo(new L.LatLng(40.01943118, -75.62175724));
+  map.panTo(new L.LatLng(40.01943118, -75.62175724),{animate: true, duration: 1});
   extonResults();
   extonCoordinates();
   clearBuffers();
@@ -361,7 +369,7 @@ $("#Thorndale").click(function(){
   console.log("Thorndale has been clicked in the dropdown menu");
   console.log("Thorndale clearMap() has been called");
   console.log("stationData.hide() executed");
-  map.panTo(new L.LatLng(39.99277222, -75.76289642));
+  map.panTo(new L.LatLng(39.99277222, -75.76289642),{animate: true, duration: 1});
   thorndaleResults();
   thorndaleCoordinates();
   clearBuffers();
