@@ -30,16 +30,16 @@ p.body {
     position: absolute;
     right: 0px;
     left: 0px;
-    height: 500px;
+    height: 50%;
     top: 0;
     z-index: -1;
 }
 
 .sidebar {
     position: absolute;
-    left: 0px;
-    width: 400px;
-    top: 500px;
+    left: 0%;
+    width: 25%;
+    top: 50%;
     bottom: 0;
     overflow-y: auto;
     padding: 20px;
@@ -48,10 +48,10 @@ p.body {
 }
 
 .right {
-  position:relative;
-  left: 400px;
-  width: 500px;
-  top: 500px;
+  position: absolute;
+  left: 25%;
+  width: 75%;
+  top: 50%;
   bottom: 0px;
   z-index: -1;
 }
