@@ -1,5 +1,4 @@
 // STILL TO DO:
-      // Add buttons for buffers and to clear buffers
       // Figure out how to bind count popups to specific blocks (see bottom of this code for notes)
       // Create legend that updates when stations and years are mapped
 
@@ -60,16 +59,18 @@ function dataPull() {
     sublayers:
         [
         {
-        sql: "",
-        cartocss: ""
+          sql: "",
+          cartocss: "",
+          interactivity: "count_",
         },
         {
-        sql: "",
-        cartocss: ""
+          sql: "",
+          cartocss: ""
         }]
       }, {}, function(layer) {
         stationData = layer;
-      }).addTo(map);
+      }).addTo(map).done(function(layer){
+          cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), ['count_']);});
       dataPull.called = true;
       console.log("dataPull status" + " " + "=" + dataPull.called);
       return dataDummy;
