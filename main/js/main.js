@@ -1,6 +1,6 @@
 // STILL TO DO:
       // Add buttons for buffers and to clear buffers
-      // Figure out how to binds count popups to specific blocks (see bottom of this code for notes)
+      // Figure out how to bind count popups to specific blocks (see bottom of this code for notes)
       // Create legend that updates when stations and years are mapped
 
 // STRETCH GOALS:
@@ -46,6 +46,7 @@ function rb2Selected(){
   rb2.checked = true;
   console.log("Radio Button 2 has been selected," + " " + "rb2 button status =" + " " + rb2.checked);
 }
+
 
 // The dataPull function essentially creates a blank cartoDB layer, which I can then change using station-specific functions.
 // This solves several problems: it means any station can be mapped first, whereas before Exton 2011 had to be mapped first or

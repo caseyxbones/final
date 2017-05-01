@@ -43,13 +43,6 @@
           </div>
         </div>
 
-        <!-- <div class="buffers">
-          <button onclick="" class="bufferbtn">0.25 Mile</button>
-          <button onclick="" class="bufferbtn">0.50 Mile</button>
-          <button onclick="" class="bufferbtn">1.00 Mile</button>
-          <button onclick="" class="bufferbtn">5.00 Mile</button>
-        </div> -->
-
         <div class="results" id="results">
           <p class="heading" id="station_name">Station Name</p>
           <p class="body" id="station_details">
@@ -69,6 +62,7 @@
     </div>
 
 
+
     <!-- Map -->
     <div id="map" class="map">
       <!--  This legend was adapted from code provided by Tile Mill at the following URL: -->
@@ -86,13 +80,14 @@
           </div>
         </div>
         <div id="bufferbtns" class="buffers">
-          <button onclick="" class="bufferbtn">Clear</button>
-          <button onclick="" class="bufferbtn">0.25 Mile</button>
-          <button onclick="" class="bufferbtn">0.50 Mile</button>
-          <button onclick="" class="bufferbtn">1.00 Mile</button>
-          <button onclick="" class="bufferbtn">5.00 Mile</button>
+          <button id="clearButton" onclick="clearBuffers()" class="bufferbtn">Clear</button>
+          <button id="quarterButton" onclick="bufferQuarterMile()" class="bufferbtn">0.25 Mile</button>
+          <button id="halfButton" onclick="bufferHalfMile()" class="bufferbtn">0.50 Mile</button>
+          <button id="oneButton" onclick="bufferOneMile()" class="bufferbtn">1.00 Mile</button>
+          <button id="fiveButton" onclick="bufferFiveMile()" class="bufferbtn">5.00 Mile</button>
         </div>
     </div>
+
 
     <!-- Javascript Imports -->
     <script src="js/jquery-2.2.0.js"></script>

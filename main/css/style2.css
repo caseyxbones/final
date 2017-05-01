@@ -197,11 +197,10 @@ https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/*/
 
 
 .buffers {
-    position: fixed;
-    float: inherit;
+    position: relative;
     display: inline-block;
-    margin-left: 75%;
-    margin-top: 22.5%;
+    margin-left: 80%;
+    margin-top: 23%;
     z-index: 10;
 }
 
