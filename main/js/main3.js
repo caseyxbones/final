@@ -50,8 +50,6 @@ $('#myDropdown').on('show.bs.dropdown', function () {
 
 
 
-
-
 // RADIO BUTTON FUNCTIONS
     // This  helps the "Map Selected()" function code know which data to map on a button click event later
 function rb1Selected(){
@@ -67,7 +65,6 @@ function rb2Selected(){
   rb2.checked = true;
   // console.log("Radio Button 2 has been selected," + " " + "rb2 button status =" + " " + rb2.checked);
 }
-
 
 // DATA PULL FUNCTION
     // The dataPull function essentially creates a blank cartoDB layer, which I can then change using station-specific functions.
@@ -412,6 +409,13 @@ function showDropdown() {
         $("#year2").hide();
         $("#rb2").hide();
         $("#results").show();
+        $("#passengers").text(" 546 passengers");
+        $("#passRank").text(" 49");
+        $("#pedStats").text(" 52% (282 passengers)");
+        $("#bikeStats").text(" <1% (1 passenger)");
+        $("#busStats").text(" 0% (0 passengers)");
+        $("#carStats").text(" 48% (263 passengers)");
+
       }
 
 
@@ -423,6 +427,8 @@ function showDropdown() {
         map.panTo(new L.LatLng(39.952372, -75.163584),{animate: true, duration: 1});
         $("#myDropdown").hide();
         $("#results").hide();
+        $("#legend").hide();
+        $("#bufferbtns").hide();
         clearBuffers();
       });
 
@@ -450,5 +456,12 @@ function showDropdown() {
         stationData.hide();
         MapSelected();
         stationData.show();
+        // console.log("stationData.show() executed");
+      });
+
+      $("#clearMap").click(function(){
+        // console.log("The 'Map Selected' button has been clicked");
+        stationData.hide();
+        clearBuffers();
         // console.log("stationData.show() executed");
       });
