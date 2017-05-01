@@ -1,5 +1,4 @@
 // STILL TO DO:
-      // Figure out how to bind count popups to specific blocks (see bottom of this code for notes)
       // Create legend that updates when stations and years are mapped
 
 // STRETCH GOALS:
@@ -70,7 +69,8 @@ function dataPull() {
       }, {}, function(layer) {
         stationData = layer;
       }).addTo(map).done(function(layer){
-          cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), ['count_']);});
+            cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), ['count_']);
+        });
       dataPull.called = true;
       console.log("dataPull status" + " " + "=" + dataPull.called);
       return dataDummy;
@@ -282,6 +282,37 @@ function getGlobalYX() {
       clearallBuffers();
     }
 
+
+// Legend change Functions
+
+    function legendExton11() {
+      $("#legendHighest").text("10");
+      $("#legend1").css( "background", "#ffffb2" );
+      $("#legend2").css( "background", "#fecc5c" );
+      $("#legend3").css( "background", "#fd8d3c" );
+      $("#legend4").css( "background", "#f03b20" );
+      $("#legend5").css( "background", "#bd0026" );
+    }
+
+    function legendExton16() {
+      $("#legendHighest").text("8");
+      $("#legend1").css( "background", "#c4e6c3" );
+      $("#legend2").css( "background", "#80c799" );
+      $("#legend3").css( "background", "#4da284" );
+      $("#legend4").css( "background", "#2d7974" );
+      $("#legend5").css( "background", "#1d4f60" );
+    }
+
+    function legendThorndale16() {
+      $("#legendHighest").text("6");
+      $("#legend1").css( "background", "#f3e79b" );
+      $("#legend2").css( "background", "#fab27f" );
+      $("#legend3").css( "background", "#eb7f86" );
+      $("#legend4").css( "background", "#b95e9a" );
+      $("#legend5").css( "background", "#5c53a5" );
+    }
+
+
 // Station selection Functions
 // Again, this is scalable: if there were 200 stations added this would become long, but would be relatively easily
 // accomplished with some copy/paste and a few modifications.
@@ -292,16 +323,19 @@ function MapSelected() {
   if (($("#station_name").text() === "Exton Station") && (rb1.checked === true)) {
     console.log("Someone wants to map Exton 2011!");
     exton2011();
+    legendExton11();
     return;
   }
     else if (($("#station_name").text() === "Exton Station") && (rb2.checked === true)) {
       console.log("Someone wants to map Exton 2016!");
       exton2016();
+      legendExton16();
       return;
     }
     else if (($("#station_name").text() === "Thorndale Station") && (rb1.checked === true)) {
       console.log("Someone wants to map Thorndale 2016!");
       thorndale2016();
+      legendThorndale16();
       return;
     }
     else {
@@ -316,6 +350,7 @@ function showDropdown() {
     console.log("dataPull called within showDropdown");
     $("#myDropdown").show();
 }
+
 
 // Results Functions
 // This might be more easily accomplished with SQL calls if there are lots of stations going forward
