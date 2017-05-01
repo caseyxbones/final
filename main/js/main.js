@@ -1,6 +1,3 @@
-// STILL TO DO:
-      // Create legend that updates when stations and years are mapped
-
 // STRETCH GOALS:
       // Figure out how to calculate the count for all blocks within a given buffer (turf.js probably)
 
@@ -27,10 +24,11 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolab
 // Global Variables
 var username = "caseyxbones";
 var globalData;
+var unit = 'miles';
 var globalYX = [];
 
-// Radio Button Functions
-// This  helps the "Map Selected()" function code know which data to map on a button click event later
+// RADIO BUTTON FUNCTIONS
+    // This  helps the "Map Selected()" function code know which data to map on a button click event later
 function rb1Selected(){
   rb1.checked = true;
   console.log("Radio Button 1 has been selected,"+ " " + " rb1 button status =" + " " + rb1.checked);
@@ -46,10 +44,11 @@ function rb2Selected(){
 }
 
 
-// The dataPull function essentially creates a blank cartoDB layer, which I can then change using station-specific functions.
-// This solves several problems: it means any station can be mapped first, whereas before Exton 2011 had to be mapped first or
-// else stationData didn't exist; it makes it so that the SQL is truly refreshing and layers cannot appear on top of each other;
-// it is easier for me, personally, to work with and understand.
+// DATA PULL FUNCTION
+    // The dataPull function essentially creates a blank cartoDB layer, which I can then change using station-specific functions.
+    // This solves several problems: it means any station can be mapped first, whereas before Exton 2011 had to be mapped first or
+    // else stationData didn't exist; it makes it so that the SQL is truly refreshing and layers cannot appear on top of each other;
+    // it is easier for me, personally, to work with and understand.
 function dataPull() {
   var dataDummy = cartodb.createLayer(map, {
     user_name: 'caseyxbones',
@@ -80,9 +79,10 @@ function dataPull() {
 // makes sure stationData exists right after page load even though nothing is mapped
 dataPull();
 
-// Functions to get specific station coordinates when station is selected:
-// If more stations are added later, the code below can be copied, pasted, and easily modified
-// This meas the mapping functions can be easily expanded and scaled in the future
+// STATION COORDINATE FUNCTIONS
+    // Functions to get specific station coordinates when station is selected:
+    // If more stations are added later, the code below can be copied, pasted, and easily modified
+    // This meas the mapping functions can be easily expanded and scaled in the future
 function extonCoordinates (){
     var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Exton'",
     function (data) {
@@ -103,9 +103,10 @@ function thorndaleCoordinates (){
     );
   }
 
-// Functions to get data from Carto for a station and map it
-// If more stations are added later, the code below can be copied, pasted, and easily modified
-// This meas the mapping functions can be easily expanded and scaled in the future
+// STATION DATA SQL FUNCTIONS
+    // Functions to get data from Carto for a station and map it
+    // If more stations are added later, the code below can be copied, pasted, and easily modified
+    // This meas the mapping functions can be easily expanded and scaled in the future
 function exton2011() {
     console.log("exton2011 called");
     layerSelected = stationData.getSubLayer(0);
@@ -139,13 +140,11 @@ function thorndale2016() {
 ///////////////////////////////////////////////
 ///                BUFFER STUFF            ///
 ///////////////////////////////////////////////
+    // The cool thing about these functions is that they use globalXY for the coordinates
+    // That means that even if 200 more stations are added to this application, this code will
+    // always work and not need to be modified. I am particularly proud of this, and it means
+    // application scaling is realistic
 
-// The cool thing about these functions is that they use globalXY for the coordinates
-// That means that even if 200 more stations are added to this application, this code will
-// always work and not need to be modified. I am particularly proud of this, and it means
-// application scaling is realistic
-
-var unit = 'miles';
 function getGlobalYX() {
       var ptDummy = {
         "type": "Feature",
@@ -283,7 +282,11 @@ function getGlobalYX() {
     }
 
 
-// Legend change Functions
+// LEGEND CHANGE FUNCTIONS
+    // These make sure the colors of the legends and the max/min values update with each data set that is mapped.
+    // I use jQUERY to do this but there might be an easier eay. Theoretically you could find the MIN and MAX using
+    // SQL but I can't figure out how to do that. For just a few stations this is an okay manual way to do it. If
+    // the application is scaled, this would add a lot of code and cpould become cumbersome.
 
     function legendExton11() {
       $("#legendHighest").text("10");
@@ -313,36 +316,40 @@ function getGlobalYX() {
     }
 
 
-// Station selection Functions
-// Again, this is scalable: if there were 200 stations added this would become long, but would be relatively easily
-// accomplished with some copy/paste and a few modifications.
-function MapSelected() {
-  map.setZoom(11);
-  $("#legend").show();
-  $("#bufferbtns").show();
-  if (($("#station_name").text() === "Exton Station") && (rb1.checked === true)) {
-    console.log("Someone wants to map Exton 2011!");
-    exton2011();
-    legendExton11();
-    return;
-  }
-    else if (($("#station_name").text() === "Exton Station") && (rb2.checked === true)) {
-      console.log("Someone wants to map Exton 2016!");
-      exton2016();
-      legendExton16();
-      return;
-    }
-    else if (($("#station_name").text() === "Thorndale Station") && (rb1.checked === true)) {
-      console.log("Someone wants to map Thorndale 2016!");
-      thorndale2016();
-      legendThorndale16();
-      return;
-    }
-    else {
-      alert("Please select data to map");
-      console.log("No data is selected!");
-    }
-}
+// STATION SELECTION FUNCTIONS
+      // This is the MapSelected function that actually does a lot of the legwork for the application.
+      // Basically, this function checks to see which station is selected (using jQUERY) and which year (using the
+      // radio button functions from the beginning of this code) to determine which mapping functions to run.
+      // Again, this is intended to be  scalable: if there were 200 stations added this would become long, but would be
+      // relatively easily accomplished with some copy/paste and a few modifications.
+
+      function MapSelected() {
+        map.setZoom(11);
+        $("#legend").show();
+        $("#bufferbtns").show();
+        if (($("#station_name").text() === "Exton Station") && (rb1.checked === true)) {
+          console.log("Someone wants to map Exton 2011!");
+          exton2011();
+          legendExton11();
+          return;
+        }
+          else if (($("#station_name").text() === "Exton Station") && (rb2.checked === true)) {
+            console.log("Someone wants to map Exton 2016!");
+            exton2016();
+            legendExton16();
+            return;
+          }
+          else if (($("#station_name").text() === "Thorndale Station") && (rb1.checked === true)) {
+            console.log("Someone wants to map Thorndale 2016!");
+            thorndale2016();
+            legendThorndale16();
+            return;
+          }
+          else {
+            alert("Please select data to map");
+            console.log("No data is selected!");
+          }
+      }
 
 function showDropdown() {
     showDropdown.called = true;
@@ -353,105 +360,70 @@ function showDropdown() {
 
 
 // Results Functions
-// This might be more easily accomplished with SQL calls if there are lots of stations going forward
-// Then again, the code will be long either way if there are lots of stations in the future, so maybe
-// Copy paste will work just as well. Especially since this information is generally static and
-// Shouldn't need to be updated.
-function extonResults(){
-  $("#myDropdown").hide();
-  $("#station_name").text("Exton Station");
-  $("#line_name").text("Paoli/Thorndale Line");
-  $("#station_location").text("Chester, Pennsylvania");
-  $("#station_location").text("Chester, Pennsylvania");
-  $("#year1").text("2011");
-  $("#year2").show();
-  $("#rb2").show();
-  $("#year2").text("2016");
-  $("#results").show();
-}
+      // This might be more easily accomplished with SQL calls if there are lots of stations going forward
+      // Then again, the code will be long either way if there are lots of stations in the future, so maybe
+      // Copy paste will work just as well. Especially since this information is generally static and
+      // Shouldn't need to be updated.
+      function extonResults(){
+        $("#myDropdown").hide();
+        $("#station_name").text("Exton Station");
+        $("#line_name").text("Paoli/Thorndale Line");
+        $("#station_location").text("Chester, Pennsylvania");
+        $("#station_location").text("Chester, Pennsylvania");
+        $("#year1").text("2011");
+        $("#year2").show();
+        $("#rb2").show();
+        $("#year2").text("2016");
+        $("#results").show();
+      }
 
-function thorndaleResults(){
-  $("#myDropdown").hide();
-  $("#station_name").text("Thorndale Station");
-  $("#line_name").text("Paoli/Thorndale Line");
-  $("#station_location").text("Chester, Pennsylvania");
-  $("#station_location").text("Chester, Pennsylvania");
-  $("#year1").text("2016");
-  $("#year2").hide();
-  $("#rb2").hide();
-  $("#results").show();
-}
+      function thorndaleResults(){
+        $("#myDropdown").hide();
+        $("#station_name").text("Thorndale Station");
+        $("#line_name").text("Paoli/Thorndale Line");
+        $("#station_location").text("Chester, Pennsylvania");
+        $("#station_location").text("Chester, Pennsylvania");
+        $("#year1").text("2016");
+        $("#year2").hide();
+        $("#rb2").hide();
+        $("#results").show();
+      }
 
 
 // Click Events
-$("#Home").click(function(){
-  console.log("Re-center map has been clicked");
-  stationData.hide();
-  map.panTo(new L.LatLng(39.952372, -75.163584),{animate: true, duration: 1});
-  $("#myDropdown").hide();
-  $("#results").hide();
-  clearBuffers();
-});
+    // These are the things that actually activate everything else in this application.
+      $("#Home").click(function(){
+        console.log("Re-center map has been clicked");
+        stationData.hide();
+        map.panTo(new L.LatLng(39.952372, -75.163584),{animate: true, duration: 1});
+        $("#myDropdown").hide();
+        $("#results").hide();
+        clearBuffers();
+      });
 
-$("#Exton").click(function(){
-  console.log("Exton has been clicked in the dropdown menu");
-  console.log("Exton clearMap() has been called");
-  map.panTo(new L.LatLng(40.01943118, -75.62175724),{animate: true, duration: 1});
-  extonResults();
-  extonCoordinates();
-  clearBuffers();
-});
+      $("#Exton").click(function(){
+        console.log("Exton has been clicked in the dropdown menu");
+        console.log("Exton clearMap() has been called");
+        map.panTo(new L.LatLng(40.01943118, -75.62175724),{animate: true, duration: 1});
+        extonResults();
+        extonCoordinates();
+        clearBuffers();
+      });
 
-$("#Thorndale").click(function(){
-  console.log("Thorndale has been clicked in the dropdown menu");
-  console.log("Thorndale clearMap() has been called");
-  console.log("stationData.hide() executed");
-  map.panTo(new L.LatLng(39.99277222, -75.76289642),{animate: true, duration: 1});
-  thorndaleResults();
-  thorndaleCoordinates();
-  clearBuffers();
-});
+      $("#Thorndale").click(function(){
+        console.log("Thorndale has been clicked in the dropdown menu");
+        console.log("Thorndale clearMap() has been called");
+        console.log("stationData.hide() executed");
+        map.panTo(new L.LatLng(39.99277222, -75.76289642),{animate: true, duration: 1});
+        thorndaleResults();
+        thorndaleCoordinates();
+        clearBuffers();
+      });
 
-$("#mapSelected").click(function(){
-  console.log("The 'Map Selected' button has been clicked");
-  stationData.hide();
-  MapSelected();
-  stationData.show();
-  console.log("stationData.show() executed");
-});
-
-
-
-///////////////////////////////////////////////
-///                FOR MONDAY 5/1           ///
-///////////////////////////////////////////////
-
-// Work with this to get pop-up info-windows for your GeoJSON layers
-// You will have to create an SQL statement to get the value of the "Count" column for each feature
-// You will have to figure out where that value is stored and then fill in the "popupContent" field with that array address
-// This is similar to what you did to get ther GlobalYX for the buffers
-// Build off of that code to do this code
-
-// function onEachFeature(feature, layer) {
-//     // does this feature have a property named popupContent?
-//     if (feature.properties && feature.properties.popupContent) {
-//         layer.bindPopup(feature.properties.popupContent);
-//     }
-// }
-//
-// var geojsonFeature = {
-//     "type": "Feature",
-//     "properties": {
-//         "name": "Coors Field",
-//         "amenity": "Baseball Stadium",
-//         "popupContent": "This is where the Rockies play!"
-//     },
-//     "geometry": {
-//         "type": "Point",
-//         "coordinates": [-104.99404, 39.75621]
-//     }
-// };
-//
-// L.geoJSON(geojsonFeature, {
-//     onEachFeature: onEachFeature
-// }).addTo(map);
+      $("#mapSelected").click(function(){
+        console.log("The 'Map Selected' button has been clicked");
+        stationData.hide();
+        MapSelected();
+        stationData.show();
+        console.log("stationData.show() executed");
+      });
