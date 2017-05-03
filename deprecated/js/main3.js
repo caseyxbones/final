@@ -1,11 +1,11 @@
-console.log ("11:01");
+// STRETCH GOALS:
+      // Figure out how to calculate the count for all blocks within a given buffer (turf.js probably)
+
+
 
 $("#results").hide();
-// console.log ("results hidden");
 $("#legend").hide();
-// console.log ("legend hidden");
 $("#bufferbtns").hide();
-// console.log ("buffer buttons hiden");
 
 // Leaflet map setup
 var map = L.map('map', {
@@ -13,15 +13,13 @@ var map = L.map('map', {
   zoom: 12
 });
 
-var Map_Tiles = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png", {
-  attribution: "Map tiles by Carto",
+var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   subdomains: 'abcd',
   minZoom: 0,
   maxZoom: 20,
   ext: 'png'
 }).addTo(map);
-
-// console.log ("map tiles added to map");
 
 // Global Variables
 var username = "caseyxbones";
@@ -29,9 +27,7 @@ var globalData;
 var unit = 'miles';
 var globalYX = [];
 
-// console.log ("global variables created");
-
-//MODAL
+//MODAL TESTING
 var modal = document.getElementById('myModal');
 var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
@@ -47,21 +43,27 @@ window.onclick = function(event) {
     }
 };
 
+$('.dropdown-toggle').dropdown();
+$('#myDropdown').on('show.bs.dropdown', function () {
+  // do something…
+});
+
+
 
 // RADIO BUTTON FUNCTIONS
     // This  helps the "Map Selected()" function code know which data to map on a button click event later
 function rb1Selected(){
   rb1.checked = true;
-  console.log("Radio Button 1 has been selected,"+ " " + " rb1 button status =" + " " + rb1.checked);
+  // console.log("Radio Button 1 has been selected,"+ " " + " rb1 button status =" + " " + rb1.checked);
   rb2.checked = false;
-  console.log("Radio Button 2 has been deselected,"+ " " + "rb2 button status =" + " " + rb2.checked);
+  // console.log("Radio Button 2 has been deselected,"+ " " + "rb2 button status =" + " " + rb2.checked);
 }
 
 function rb2Selected(){
   rb1.checked = false;
-  console.log("Radio Button 1 has been deselected," + " " + "rb1 button status =" + " " + rb1.checked);
+  // console.log("Radio Button 1 has been deselected," + " " + "rb1 button status =" + " " + rb1.checked);
   rb2.checked = true;
-  console.log("Radio Button 2 has been selected," + " " + "rb2 button status =" + " " + rb2.checked);
+  // console.log("Radio Button 2 has been selected," + " " + "rb2 button status =" + " " + rb2.checked);
 }
 
 // DATA PULL FUNCTION
@@ -71,7 +73,7 @@ function rb2Selected(){
     // it is easier for me, personally, to work with and understand.
 function dataPull() {
   var dataDummy = cartodb.createLayer(map, {
-    user_name: username,
+    user_name: 'caseyxbones',
     type: 'cartodb',
     legends:true,
     sublayers:
@@ -83,16 +85,15 @@ function dataPull() {
         },
         {
           sql: "",
-          cartocss: "",
+          cartocss: ""
         }]
-      }, {https: true,}, function(data) {
-        stationData = data;
+      }, {}, function(layer) {
+        stationData = layer;
       }).addTo(map).done(function(layer){
-            cdb.vis.Vis.addInfowindow(map,
-            layer.getSubLayer(0), ['count_']);
+            cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), ['count_']);
         });
       dataPull.called = true;
-      // console.log("dataPull status" + " " + "=" + " " + dataPull.called);
+      // console.log("dataPull status" + " " + "=" + dataPull.called);
       return dataDummy;
 }
 
@@ -105,28 +106,24 @@ dataPull();
     // If more stations are added later, the code below can be copied, pasted, and easily modified
     // This meas the mapping functions can be easily expanded and scaled in the future
 function extonCoordinates (){
-    var coordinates = $.getJSON("https://" + username + ".carto.com:443/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Exton'",
+    var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Exton'",
     function (data) {
       $.each(data.rows, function(key, val) {
         globalYX.splice(0, 2, val.y, val.x);
       });
     }
     );
-    // console.log ("extonCoordinates called");
 }
 
 function thorndaleCoordinates (){
-    var coordinates = $.getJSON("https://" + username + ".carto.com:443/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Thorndale'",
+    var coordinates = $.getJSON("https://" + username + ".carto.com/api/v2/sql?q=SELECT * FROM regionalrailstations_1 WHERE station LIKE 'Thorndale'",
     function (data) {
       $.each(data.rows, function(key, val) {
         globalYX.splice(0, 2, val.y, val.x);
       });
     }
     );
-    // console.log ("thorndaleCoordinates called");
   }
-
-
 
 // STATION DATA SQL FUNCTIONS
     // Functions to get data from Carto for a station and map it
@@ -372,7 +369,7 @@ function getGlobalYX() {
           }
           else {
             alert("Please select data to map");
-            // console.log("No data is selected!");
+            console.log("No data is selected!");
           }
       }
 
@@ -465,7 +462,6 @@ function showDropdown() {
       $("#clearMap").click(function(){
         // console.log("The 'Map Selected' button has been clicked");
         stationData.hide();
-        $("#legend").hide();
-        $("#bufferbtns").hide();
         clearBuffers();
+        // console.log("stationData.show() executed");
       });
