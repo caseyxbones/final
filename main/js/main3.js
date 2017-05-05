@@ -396,7 +396,6 @@ function showDropdown() {
         $("#station_name").text("Exton");
         $("#line_name").text("Paoli/Thorndale Line");
         $("#station_location").text("Chester, Pennsylvania");
-        $("#station_location").text("Chester, Pennsylvania");
         $("#year1").text("2011");
         $("#year2").show();
         $("#rb2").show();
@@ -414,7 +413,6 @@ function showDropdown() {
         $("#myDropdown").hide();
         $("#station_name").text("Thorndale");
         $("#line_name").text("Paoli/Thorndale Line");
-        $("#station_location").text("Chester, Pennsylvania");
         $("#station_location").text("Chester, Pennsylvania");
         $("#year1").text("2016");
         $("#year2").hide();

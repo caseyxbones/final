@@ -258,20 +258,12 @@ p.body {
     background-color: #BF3D8C;
 }
 
-
-
-
-
-
 #station_location{
   font-style: italic;
 }
 
-
-
 /*The styling for this legend was adapted from code provided by Tile Mill at the following URL:
 https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/*/
-
 .my-legend {
     background-color:;
     position:absolute;
