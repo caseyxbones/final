@@ -10,8 +10,7 @@ survey data that is scrubbed of identifying information by PennDOT and then aggr
 who drive to Regional Rail stations.
 
 Analysis of this kind of data can help us understand who chooses to drive to stations, which can inform policy around multimodal and non-motorized infrastructure
-improvements near stations as well as parking availability and pricing. This website is intended to provide an example of thow the DVRPC could use its driver-origin 
-data in the future, and to create a preliminary framework upon which the DVRPC can build if it so chooses.
+improvements near stations as well as parking availability and pricing. This website is intended to provide an example of thow the DVRPC could use its driver-origin data in the future, and to create a preliminary framework upon which the DVRPC can build if it so chooses.
 
 This web application was created using proprietary data provided by the DVRPC. Driver origin data presented on this site is property of the DVRPC and is used in 
 this context with its express permission.
